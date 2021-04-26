@@ -14,11 +14,11 @@ module Paltrow
     end
 
     def with_notice a_notice
-      new(message: Message.new(text: a_notice, success: true))
+      new(message: Message.notice(a_notice))
     end
 
     def with_alert an_alert
-      new(message: Message.new(text: an_alert, success: false))
+      new(message: Message.alert(an_alert))
     end
   end
 end
