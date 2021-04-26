@@ -14,6 +14,26 @@ module Paltrow
       assert_equal ({name: "Do the laundry", completed: false}), edit_tasks_view.locals
     end
 
+    def test__creating_with_notice_builder
+      view = View.new(
+        controller: "tasks",
+        action: "edit"
+      ).with_notice("A notice")
+
+      assert_equal "A notice", view.notice
+      assert_equal "", view.alert
+    end
+
+    def test__creating_with_alert_builder
+      view = View.new(
+        controller: "tasks",
+        action: "edit"
+      ).with_alert("An alert")
+
+      assert_equal "", view.notice
+      assert_equal "An alert", view.alert
+    end
+
     def test__creating_with_notice
       view = View.new(
         controller: "tasks",
