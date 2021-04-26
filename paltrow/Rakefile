@@ -8,7 +8,6 @@ Rake::TestTask.new(:test) do |t|
   t.libs << "lib"
   t.test_files = FileList["test/**/*_test.rb"]
   t.warning = false
-  t.deps << "standard:fix"
 end
 
-task default: :test
+task default: ["standard:fix", :test]
