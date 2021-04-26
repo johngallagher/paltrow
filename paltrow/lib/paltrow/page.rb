@@ -11,5 +11,21 @@ module Paltrow
         .merge(query)
         .merge(resource_ids)
     end
+
+    def notice
+      message.notice
+    end
+
+    def alert
+      message.alert
+    end
+
+    def with_notice a_notice
+      new(message: Message.notice(a_notice))
+    end
+
+    def with_alert an_alert
+      new(message: Message.alert(an_alert))
+    end
   end
 end
