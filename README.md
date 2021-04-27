@@ -1,8 +1,6 @@
 # Paltrow
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/paltrow`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Conciously decouple from Ruby web frameworks.
 
 ## Installation
 
@@ -22,7 +20,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+* No usage instructions yet
+* Currently Paltrow only contains `Page` and `View` which can be used to store details of screens to render
+* More to come!
 
 ## Development
 
