@@ -25,6 +25,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency "dry-struct", "~> 1.4"
+  spec.add_runtime_dependency "dry-monads", "~> 1.3"
   spec.add_development_dependency "standard", "~> 1.0"
   spec.add_development_dependency "rspec-mocks", "= 3.10"
 end

@@ -20,5 +20,9 @@ module Paltrow
     def with_alert an_alert
       new(message: Message.alert(an_alert))
     end
+
+    def to_monad
+      message.success? ? Dry::Monads::Success(self) : Dry::Monads::Failure(ViewError.new(alert))
+    end
   end
 end

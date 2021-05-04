@@ -45,7 +45,8 @@ module Paltrow
           expect(controller).to have_received(:render).with(
             json: {
               error: "An alert"
-            }
+            },
+            status: :unprocessable_entity
           )
         end
       end
