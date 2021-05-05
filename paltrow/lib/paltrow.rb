@@ -6,6 +6,7 @@ require "paltrow/message"
 require "paltrow/view"
 require "paltrow/page"
 require "paltrow/rendering/rails/json"
+require "paltrow/navigating/rails/redirect"
 
 module Paltrow
   class Error < StandardError; end
