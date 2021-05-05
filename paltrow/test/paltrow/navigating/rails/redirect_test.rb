@@ -2,7 +2,7 @@ module Paltrow
   module Navigating
     module Rails
       class RedirectTest < Minitest::Test
-        def test_redirects_to_page_with_params_and_blank_recall
+        def test__given_params__then_redirects_to_page_with_params
           controller = spy(:controller)
           page = Page.new(
             controller: "tasks",
