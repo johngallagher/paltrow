@@ -4,9 +4,8 @@ module Paltrow
       class JSONTest < Minitest::Test
         def test_renders_view_as_json
           handler = spy(:handler)
-          view = View.new(
-            controller: "tasks",
-            action: "edit",
+          view = build(
+            :view,
             locals: {
               name: "Do the laundry",
               completed: false
@@ -28,14 +27,17 @@ module Paltrow
 
         def test_renders_alert_view_with_message_and_unprocessable_entity
           handler = spy(:handler)
-          view = View.new(
-            controller: "tasks",
-            action: "edit",
+          view = build(
+            :view,
             locals: {
               name: "Do the laundry",
               completed: false
+            },
+            message: {
+              text: "An alert",
+              success: false
             }
-          ).with_alert("An alert")
+          )
 
           JSON.new.call(
             handler: handler,
