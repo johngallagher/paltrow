@@ -6,7 +6,7 @@ module Paltrow
           handler = spy(:handler)
           page = build(
             :page,
-            controller: "tasks",
+            resource: "tasks",
             action: "edit",
             resource_ids: {
               id: "task-1234",

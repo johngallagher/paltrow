@@ -30,7 +30,7 @@ class Minitest::Test
 
   def build_page attributes
     default_attributes = {
-      controller: "tasks",
+      resource: "tasks",
       action: "edit",
       resource_ids: {
         id: "task-1234",
@@ -45,7 +45,7 @@ class Minitest::Test
 
   def build_view attributes
     default_attributes = {
-      controller: "tasks",
+      resource: "tasks",
       action: "edit",
       locals: {
         name: "Do the laundry",

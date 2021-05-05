@@ -1,22 +1,22 @@
 module Paltrow
   class ViewTest < Minitest::Test
-    def test__creating_with_locals_controller_and_actions
+    def test__creating_with_locals_resource_and_actions
       edit_tasks_view = View.new(
-        controller: "tasks",
+        resource: "tasks",
         action: "edit",
         locals: {
           name: "Do the laundry",
           completed: false
         }
       )
-      assert_equal "tasks", edit_tasks_view.controller
+      assert_equal "tasks", edit_tasks_view.resource
       assert_equal "edit", edit_tasks_view.action
       assert_equal ({name: "Do the laundry", completed: false}), edit_tasks_view.locals
     end
 
     def test__creating_with_notice_builder
       view = View.new(
-        controller: "tasks",
+        resource: "tasks",
         action: "edit"
       ).with_notice("A notice")
 
@@ -26,7 +26,7 @@ module Paltrow
 
     def test__creating_with_alert_builder
       view = View.new(
-        controller: "tasks",
+        resource: "tasks",
         action: "edit"
       ).with_alert("An alert")
 
@@ -36,7 +36,7 @@ module Paltrow
 
     def test__creating_with_notice
       view = View.new(
-        controller: "tasks",
+        resource: "tasks",
         action: "edit",
         message: {
           text: "A notice"
@@ -48,7 +48,7 @@ module Paltrow
 
     def test__creating_with_alert
       view = View.new(
-        controller: "tasks",
+        resource: "tasks",
         action: "edit",
         message: {
           text: "An alert",
