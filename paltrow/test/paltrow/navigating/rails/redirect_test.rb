@@ -44,6 +44,19 @@ module Paltrow
           expect(flash).to have_received(:[]=).with(:notice, "A notice")
         end
 
+        def test__given_page_has_failure_message__then_sets_flash_alert
+          flash = instance_spy(Hash)
+          controller = spy(:controller, flash: flash)
+          page = build(:page, message: {text: "An alert", success: false})
+
+          Redirect.new.call(
+            controller: controller,
+            page: page
+          )
+
+          expect(flash).to have_received(:[]=).with(:alert, "An alert")
+        end
+
         def build(name, attributes = {})
           default_attributes = {
             controller: "tasks",
