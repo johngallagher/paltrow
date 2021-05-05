@@ -27,6 +27,50 @@ module Paltrow
             }
           )
         end
+
+        def test__given_view_with_notice__then_sets_notice_on_flash_now
+          flash_now = instance_spy(Hash)
+          controller = spy(:controller, flash: OpenStruct.new(now: flash_now))
+          view = build(
+            :view,
+            message: {
+              text: "A notice",
+              success: true
+            }
+          )
+
+          Template.new.call(
+            handler: controller,
+            view: view
+          )
+
+          expect(flash_now).to have_received(:[]=).with(
+            :notice,
+            "A notice"
+          )
+        end
+
+        def test__given_view_with_alert__then_sets_alert_on_flash_now
+          flash_now = instance_spy(Hash)
+          controller = spy(:controller, flash: OpenStruct.new(now: flash_now))
+          view = build(
+            :view,
+            message: {
+              text: "An alert",
+              success: false
+            }
+          )
+
+          Template.new.call(
+            handler: controller,
+            view: view
+          )
+
+          expect(flash_now).to have_received(:[]=).with(
+            :alert,
+            "An alert"
+          )
+        end
       end
     end
   end
