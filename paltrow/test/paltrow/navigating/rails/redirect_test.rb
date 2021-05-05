@@ -30,6 +30,34 @@ module Paltrow
             _recall: {}
           )
         end
+
+        def test__given_page_has_message__then_sets_flash_notice
+          flash = instance_spy(Hash)
+          controller = spy(:controller, flash: flash)
+          page = build(:page, message: {text: "A notice", success: true})
+
+          Redirect.new.call(
+            controller: controller,
+            page: page
+          )
+
+          expect(flash).to have_received(:[]=).with(:notice, "A notice")
+        end
+
+        def build(name, attributes = {})
+          default_attributes = {
+            controller: "tasks",
+            action: "edit",
+            resource_ids: {
+              id: "task-1234",
+              project_id: "project-1234"
+            },
+            query: {
+              completed: false
+            }
+          }
+          Page.new(default_attributes.merge(attributes))
+        end
       end
     end
   end
