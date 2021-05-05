@@ -2,11 +2,11 @@ module Paltrow
   module Rendering
     module Rails
       class JSON
-        def call controller:, view:
+        def call handler:, view:
           view
             .to_monad
-            .fmap { |view| controller.render(json: view.locals) }
-            .or { |error| controller.render(json: {error: error.message}, status: :unprocessable_entity) }
+            .fmap { |view| handler.render(json: view.locals) }
+            .or { |error| handler.render(json: {error: error.message}, status: :unprocessable_entity) }
         end
       end
     end

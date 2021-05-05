@@ -3,7 +3,7 @@ module Paltrow
     module Rails
       class RedirectTest < Minitest::Test
         def test__given_params__then_redirects_to_page_with_params
-          controller = spy(:controller)
+          handler = spy(:handler)
           page = Page.new(
             controller: "tasks",
             action: "edit",
@@ -17,11 +17,11 @@ module Paltrow
           )
 
           Redirect.new.call(
-            controller: controller,
+            handler: handler,
             page: page
           )
 
-          expect(controller).to have_received(:redirect_to).with(
+          expect(handler).to have_received(:redirect_to).with(
             controller: "tasks",
             action: "edit",
             id: "task-1234",
@@ -33,11 +33,11 @@ module Paltrow
 
         def test__given_page_has_message__then_sets_flash_notice
           flash = instance_spy(Hash)
-          controller = spy(:controller, flash: flash)
+          handler = spy(:handler, flash: flash)
           page = build(:page, message: {text: "A notice", success: true})
 
           Redirect.new.call(
-            controller: controller,
+            handler: handler,
             page: page
           )
 
@@ -46,11 +46,11 @@ module Paltrow
 
         def test__given_page_has_failure_message__then_sets_flash_alert
           flash = instance_spy(Hash)
-          controller = spy(:controller, flash: flash)
+          handler = spy(:handler, flash: flash)
           page = build(:page, message: {text: "An alert", success: false})
 
           Redirect.new.call(
-            controller: controller,
+            handler: handler,
             page: page
           )
 

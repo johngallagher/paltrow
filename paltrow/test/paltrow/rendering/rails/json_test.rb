@@ -3,7 +3,7 @@ module Paltrow
     module Rails
       class JSONTest < Minitest::Test
         def test_renders_view_as_json
-          controller = spy(:controller)
+          handler = spy(:handler)
           view = View.new(
             controller: "tasks",
             action: "edit",
@@ -14,11 +14,11 @@ module Paltrow
           )
 
           JSON.new.call(
-            controller: controller,
+            handler: handler,
             view: view
           )
 
-          expect(controller).to have_received(:render).with(
+          expect(handler).to have_received(:render).with(
             json: {
               name: "Do the laundry",
               completed: false
@@ -27,7 +27,7 @@ module Paltrow
         end
 
         def test_renders_alert_view_with_message_and_unprocessable_entity
-          controller = spy(:controller)
+          handler = spy(:handler)
           view = View.new(
             controller: "tasks",
             action: "edit",
@@ -38,11 +38,11 @@ module Paltrow
           ).with_alert("An alert")
 
           JSON.new.call(
-            controller: controller,
+            handler: handler,
             view: view
           )
 
-          expect(controller).to have_received(:render).with(
+          expect(handler).to have_received(:render).with(
             json: {
               error: "An alert"
             },
