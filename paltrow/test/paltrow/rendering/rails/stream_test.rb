@@ -9,8 +9,8 @@ module Paltrow
             headers = {}
             response = spy(:response, headers: headers, stream: spy(:stream))
             controller = spy(:controller, response: response)
-            view = build(
-              :view,
+            page = build(
+              :page,
               locals: {
                 filename: "download.pdf",
                 content_stream: ContentStream.new(Dry::Monads::Success("chunk"))
@@ -19,7 +19,7 @@ module Paltrow
 
             Stream.new.call(
               handler: controller,
-              view: view
+              page: page
             )
 
             assert_equal headers, {
@@ -35,8 +35,8 @@ module Paltrow
         def test__given_streaming__then_streams_successful_chunk
           stream = spy(:stream)
           controller = spy(:controller, response: spy(:response, headers: {}, stream: stream))
-          view = build(
-            :view,
+          page = build(
+            :page,
             locals: {
               filename: "download.pdf",
               content_stream: ContentStream.new(Dry::Monads::Success("chunk"))
@@ -45,7 +45,7 @@ module Paltrow
 
           Stream.new.call(
             handler: controller,
-            view: view
+            page: page
           )
 
           expect(stream).to have_received(:write).with("chunk")
@@ -56,8 +56,8 @@ module Paltrow
           stream = spy(:stream)
           response = spy(:response, headers: headers, stream: stream)
           controller = spy(:controller, response: response)
-          view = build(
-            :view,
+          page = build(
+            :page,
             locals: {
               filename: "download.pdf",
               content_stream: CrashingContentStream.new
@@ -67,7 +67,7 @@ module Paltrow
           assert_raises ArgumentError do
             Stream.new.call(
               handler: controller,
-              view: view
+              page: page
             )
           end
 

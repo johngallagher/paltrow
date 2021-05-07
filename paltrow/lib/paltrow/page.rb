@@ -2,9 +2,11 @@ module Paltrow
   class Page < Dry::Struct
     attribute :resource, Dry.Types::String
     attribute :action, Dry.Types::String.enum("new", "edit", "show", "index")
+    attribute :message?, Message.default { Message.new }
+
+    attribute :locals?, Dry.Types::Hash.optional.default({}.freeze)
     attribute :query?, Dry.Types::Hash.optional.default({}.freeze)
     attribute :resource_ids?, Dry.Types::Hash.optional.default({}.freeze)
-    attribute :message?, Message.default { Message.new }
 
     def to_params
       {resource: resource, action: action}
@@ -26,6 +28,10 @@ module Paltrow
 
     def with_alert an_alert
       new(message: Message.alert(an_alert))
+    end
+
+    def to_monad
+      message.success? ? Dry::Monads::Success(self) : Dry::Monads::Failure(ViewError.new(alert))
     end
   end
 end

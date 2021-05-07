@@ -4,8 +4,8 @@ module Paltrow
       class TemplateTest < Minitest::Test
         def test__given_resource_and_action__then_renders_template_with_that_name
           controller = spy(:controller)
-          view = build(
-            :view,
+          page = build(
+            :page,
             resource: "tasks",
             action: "edit",
             locals: {
@@ -16,7 +16,7 @@ module Paltrow
 
           Template.new.call(
             handler: controller,
-            view: view
+            page: page
           )
 
           expect(controller).to have_received(:render).with(
@@ -31,8 +31,8 @@ module Paltrow
         def test__given_view_with_notice__then_sets_notice_on_flash_now
           flash_now = instance_spy(Hash)
           controller = spy(:controller, flash: OpenStruct.new(now: flash_now))
-          view = build(
-            :view,
+          page = build(
+            :page,
             message: {
               text: "A notice",
               success: true
@@ -41,7 +41,7 @@ module Paltrow
 
           Template.new.call(
             handler: controller,
-            view: view
+            page: page
           )
 
           expect(flash_now).to have_received(:[]=).with(
@@ -53,8 +53,8 @@ module Paltrow
         def test__given_view_with_alert__then_sets_alert_on_flash_now
           flash_now = instance_spy(Hash)
           controller = spy(:controller, flash: OpenStruct.new(now: flash_now))
-          view = build(
-            :view,
+          page = build(
+            :page,
             message: {
               text: "An alert",
               success: false
@@ -63,7 +63,7 @@ module Paltrow
 
           Template.new.call(
             handler: controller,
-            view: view
+            page: page
           )
 
           expect(flash_now).to have_received(:[]=).with(

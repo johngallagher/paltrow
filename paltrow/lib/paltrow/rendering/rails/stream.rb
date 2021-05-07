@@ -45,10 +45,10 @@ module Paltrow
       end
 
       class Stream
-        def call handler:, view:
+        def call handler:, page:
           handler.response.headers["Content-Disposition"] = ContentDisposition.format(
             disposition: "attachment",
-            filename: view.locals.fetch(:filename)
+            filename: page.locals.fetch(:filename)
           )
           handler.response.delete_header "Content-Length"
           handler.response.headers["Cache-Control"] = "no-cache"
@@ -56,7 +56,7 @@ module Paltrow
           handler.response.headers["X-Accel-Buffering"] = "no"
 
           begin
-            view
+            page
               .locals
               .fetch(:content_stream)
               .each_chunk { |chunk| handler.response.stream.write(chunk.value!) if chunk.success? }

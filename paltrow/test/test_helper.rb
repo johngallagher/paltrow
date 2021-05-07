@@ -38,20 +38,9 @@ class Minitest::Test
       },
       query: {
         completed: false
-      }
+      },
+      locals: {}
     }
     Paltrow::Page.new(default_attributes.merge(attributes))
-  end
-
-  def build_view attributes
-    default_attributes = {
-      resource: "tasks",
-      action: "edit",
-      locals: {
-        name: "Do the laundry",
-        completed: false
-      }
-    }
-    Paltrow::View.new(default_attributes.merge(attributes))
   end
 end
