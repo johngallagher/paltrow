@@ -1,12 +1,13 @@
 module Paltrow
   class Page < Dry::Struct
-    attribute :resource, Dry.Types::String
-    attribute :action, Dry.Types::String.enum("new", "edit", "show", "index")
-    attribute :message?, Message.default { Message.new }
+    attribute :resource, Dry.Types::Strict::String
+    attribute :action, Dry.Types::Strict::String.enum("new", "edit", "show", "index")
+    attribute :message, Dry.Types::Strict::String.default("".freeze)
+    attribute :success, Dry.Types::Bool.default(true)
 
-    attribute :locals?, Dry.Types::Hash.optional.default({}.freeze)
-    attribute :query?, Dry.Types::Hash.optional.default({}.freeze)
-    attribute :resource_ids?, Dry.Types::Hash.optional.default({}.freeze)
+    attribute :locals, Dry.Types::Strict::Hash.default({}.freeze)
+    attribute :query, Dry.Types::Strict::Hash.default({}.freeze)
+    attribute :resource_ids, Dry.Types::Strict::Hash.default({}.freeze)
 
     def to_params
       {resource: resource, action: action}
@@ -14,24 +15,32 @@ module Paltrow
         .merge(resource_ids)
     end
 
+    def success?
+      success
+    end
+
+    def failure?
+      !success?
+    end
+
     def notice
-      message.notice
+      success? ? message : ""
     end
 
     def alert
-      message.alert
+      failure? ? message : ""
     end
 
     def with_notice a_notice
-      new(message: Message.notice(a_notice))
+      new(message: a_notice, success: true)
     end
 
     def with_alert an_alert
-      new(message: Message.alert(an_alert))
+      new(message: an_alert, success: false)
     end
 
     def to_monad
-      message.success? ? Dry::Monads::Success(self) : Dry::Monads::Failure(ViewError.new(alert))
+      success? ? Dry::Monads::Success(self) : Dry::Monads::Failure(ViewError.new(alert))
     end
   end
 end

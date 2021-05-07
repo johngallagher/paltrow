@@ -61,9 +61,7 @@ module Paltrow
       page = Page.new(
         resource: "tasks",
         action: "edit",
-        message: {
-          text: "A notice"
-        }
+        message: "A notice"
       )
       assert_equal "A notice", page.notice
       assert_equal "", page.alert
@@ -73,10 +71,8 @@ module Paltrow
       page = Page.new(
         resource: "tasks",
         action: "edit",
-        message: {
-          text: "An alert",
-          success: false
-        }
+        message: "An alert",
+        success: false
       )
       assert_equal "", page.notice
       assert_equal "An alert", page.alert

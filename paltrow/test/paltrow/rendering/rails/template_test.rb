@@ -33,10 +33,8 @@ module Paltrow
           controller = spy(:controller, flash: OpenStruct.new(now: flash_now))
           page = build(
             :page,
-            message: {
-              text: "A notice",
-              success: true
-            }
+            message: "A notice",
+            success: true
           )
 
           Template.new.call(
@@ -55,10 +53,8 @@ module Paltrow
           controller = spy(:controller, flash: OpenStruct.new(now: flash_now))
           page = build(
             :page,
-            message: {
-              text: "An alert",
-              success: false
-            }
+            message: "An alert",
+            success: false
           )
 
           Template.new.call(

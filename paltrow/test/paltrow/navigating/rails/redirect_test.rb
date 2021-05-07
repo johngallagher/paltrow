@@ -37,10 +37,8 @@ module Paltrow
           handler = spy(:handler, flash: flash)
           page = build(
             :page,
-            message: {
-              text: "A notice",
-              success: true
-            }
+            message: "A notice",
+            success: true
           )
 
           Redirect.new.call(
@@ -56,10 +54,8 @@ module Paltrow
           handler = spy(:handler, flash: flash)
           page = build(
             :page,
-            message: {
-              text: "An alert",
-              success: false
-            }
+            message: "An alert",
+            success: false
           )
 
           Redirect.new.call(

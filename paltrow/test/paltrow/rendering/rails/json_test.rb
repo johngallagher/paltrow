@@ -33,10 +33,8 @@ module Paltrow
               name: "Do the laundry",
               completed: false
             },
-            message: {
-              text: "An alert",
-              success: false
-            }
+            message: "An alert",
+            success: false
           )
 
           JSON.new.call(
