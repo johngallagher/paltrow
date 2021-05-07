@@ -24,7 +24,7 @@ class Minitest::Test
     if name == :page
       build_page attributes
     else
-      build_view attributes
+      raise ArgumentError, "Unknown factory #{name}"
     end
   end
 
