@@ -40,7 +40,7 @@ module Paltrow
     end
 
     def to_monad
-      success? ? Dry::Monads::Success(self) : Dry::Monads::Failure(ViewError.new(alert))
+      success? ? Dry::Monads::Success(self) : Dry::Monads::Failure(self)
     end
   end
 end

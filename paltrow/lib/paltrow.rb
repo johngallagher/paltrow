@@ -10,6 +10,4 @@ require "paltrow/navigating/rails/redirect"
 
 module Paltrow
   class Error < StandardError; end
-
-  class ViewError < StandardError; end
 end

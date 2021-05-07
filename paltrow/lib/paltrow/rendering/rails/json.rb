@@ -6,7 +6,7 @@ module Paltrow
           page
             .to_monad
             .fmap { |page| handler.render(json: page.locals) }
-            .or { |error| handler.render(json: {error: error.message}, status: :unprocessable_entity) }
+            .or { |page| handler.render(json: {error: page.message}, status: :unprocessable_entity) }
         end
       end
     end
