@@ -19,4 +19,28 @@ class Minitest::Test
   ensure
     ::RSpec::Mocks.teardown
   end
+
+  def build name, attributes = {}
+    if name == :page
+      build_page attributes
+    else
+      raise ArgumentError, "Unknown factory #{name}"
+    end
+  end
+
+  def build_page attributes
+    default_attributes = {
+      resource: "tasks",
+      action: "edit",
+      resource_ids: {
+        id: "task-1234",
+        project_id: "project-1234"
+      },
+      query: {
+        completed: false
+      },
+      locals: {}
+    }
+    Paltrow::Page.new(default_attributes.merge(attributes))
+  end
 end

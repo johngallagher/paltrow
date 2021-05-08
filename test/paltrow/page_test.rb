@@ -1,8 +1,22 @@
 module Paltrow
   class PageTest < Minitest::Test
-    def test__to_params_merges_controller_action_resource_ids_and_query
-      edit_tasks_view = Page.new(
-        controller: "tasks",
+    def test__creating_with_locals_resource_and_actions
+      page = Page.new(
+        resource: "tasks",
+        action: "edit",
+        locals: {
+          name: "Do the laundry",
+          completed: false
+        }
+      )
+      assert_equal "tasks", page.resource
+      assert_equal "edit", page.action
+      assert_equal ({name: "Do the laundry", completed: false}), page.locals
+    end
+
+    def test__to_params_merges_resource_action_resource_ids_and_query
+      page = Page.new(
+        resource: "tasks",
         action: "edit",
         resource_ids: {
           id: "task-123",
@@ -12,20 +26,20 @@ module Paltrow
           completed: false
         }
       )
-      assert_equal "tasks", edit_tasks_view.controller
-      assert_equal "edit", edit_tasks_view.action
+      assert_equal "tasks", page.resource
+      assert_equal "edit", page.action
       assert_equal ({
-        controller: "tasks",
+        resource: "tasks",
         action: "edit",
         id: "task-123",
         project_id: "project-123",
         completed: false
-      }), edit_tasks_view.to_params
+      }), page.to_params
     end
 
     def test__creating_with_notice_builder
       page = Page.new(
-        controller: "tasks",
+        resource: "tasks",
         action: "edit"
       ).with_notice("A notice")
 
@@ -35,7 +49,7 @@ module Paltrow
 
     def test__creating_with_alert_builder
       page = Page.new(
-        controller: "tasks",
+        resource: "tasks",
         action: "edit"
       ).with_alert("An alert")
 
@@ -45,11 +59,9 @@ module Paltrow
 
     def test__creating_with_notice
       page = Page.new(
-        controller: "tasks",
+        resource: "tasks",
         action: "edit",
-        message: {
-          text: "A notice"
-        }
+        message: "A notice"
       )
       assert_equal "A notice", page.notice
       assert_equal "", page.alert
@@ -57,12 +69,10 @@ module Paltrow
 
     def test__creating_with_alert
       page = Page.new(
-        controller: "tasks",
+        resource: "tasks",
         action: "edit",
-        message: {
-          text: "An alert",
-          success: false
-        }
+        message: "An alert",
+        success: false
       )
       assert_equal "", page.notice
       assert_equal "An alert", page.alert
