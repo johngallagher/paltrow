@@ -9,6 +9,20 @@ module Paltrow
     attribute :query, Dry.Types::Strict::Hash.default({}.freeze)
     attribute :resource_ids, Dry.Types::Strict::Hash.default({}.freeze)
 
+    PageWithURL = Struct.new(:to_params, keyword_init: true) do
+      def notice
+        ""
+      end
+
+      def alert
+        ""
+      end
+    end
+
+    def self.with_url(url)
+      PageWithURL.new(to_params: url)
+    end
+
     def to_params
       {resource: resource, action: action}
         .merge(query)

@@ -65,6 +65,20 @@ module Paltrow
 
           expect(flash).to have_received(:[]=).with(:alert, "An alert")
         end
+
+        def test__given_page_to_params_is_a_string__then_redirects_to_the_string
+          handler = spy(:handler)
+          page = Page.with_url("/path")
+
+          Redirect.new.call(
+            handler: handler,
+            page: page
+          )
+
+          expect(handler).to have_received(:redirect_to).with(
+            "/path"
+          )
+        end
       end
     end
   end

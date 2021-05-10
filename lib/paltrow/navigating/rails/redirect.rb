@@ -8,9 +8,20 @@ module Paltrow
 
           page
             .to_params
-            .merge(_recall: {})
-            .transform_keys { |key| key.to_s.gsub("resource", "controller").to_sym }
+            .then(&adapt_params_to_rails)
             .then { |params| handler.redirect_to(params) }
+        end
+
+        def adapt_params_to_rails
+          lambda do |params|
+            if params.is_a?(Hash)
+              params
+                .merge(_recall: {})
+                .transform_keys { |key| key.to_s.gsub("resource", "controller").to_sym }
+            else
+              params
+            end
+          end
         end
       end
     end
