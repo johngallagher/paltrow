@@ -59,7 +59,7 @@ module Paltrow
             page
               .locals
               .fetch(:content_stream)
-              .each_chunk { |chunk| handler.response.stream.write(chunk.value!) if chunk.success? }
+              .each_chunk { |chunk| handler.response.stream.write(chunk) }
           ensure
             handler.response.stream.close
           end

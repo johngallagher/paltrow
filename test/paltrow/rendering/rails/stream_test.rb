@@ -13,7 +13,7 @@ module Paltrow
               :page,
               locals: {
                 filename: "download.pdf",
-                content_stream: ContentStream.new(Dry::Monads::Success("chunk"))
+                content_stream: ContentStream.new("chunk")
               }
             )
 
@@ -39,7 +39,7 @@ module Paltrow
             :page,
             locals: {
               filename: "download.pdf",
-              content_stream: ContentStream.new(Dry::Monads::Success("chunk"))
+              content_stream: ContentStream.new("chunk")
             }
           )
 
@@ -82,12 +82,12 @@ module Paltrow
       end
 
       class ContentStream
-        def initialize fragment_result
-          @fragment_result = fragment_result
+        def initialize chunk
+          @chunk = chunk
         end
 
         def each_chunk &block
-          block.call(@fragment_result)
+          block.call(@chunk)
         end
       end
     end
